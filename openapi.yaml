@@ -1,0 +1,66 @@
+swagger: "2.0"
+info:
+  title: "Fish API"
+paths:
+  /caught:
+    get:
+      description: Return all caught fish
+      responses:
+        200:
+          description: all caught fish
+    post:
+      description: Create a caught fish
+      parameters:
+        - in: body
+          schema:
+            type: object
+            properties:
+              length:
+                type: integer
+                required: true
+              weight:
+                type: integer
+                required: true
+              dateOfCatch:
+                type: string
+                format: date
+                required: true
+              caughtBy:
+                type: string
+                required: true
+              FishId:
+                type: integer
+                required: true
+      responses:
+        201:
+          description: Successful creation
+          schema:
+            type: object
+            properties:
+              msg:
+                example: "Created!"
+        400:
+          description: Missing parameters or a catch already exists with these exact details
+  /caught/{id}:
+    delete:
+      description: Delete a catch
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Successful deletion
+          schema:
+            type: object
+            properties:
+              msg:
+                example: "Deleted!"
+        404:
+          description: No catch found with id
+          schema:
+            type: object
+            properties:
+              msg:
+                example: "Catch not found!"

@@ -1,8 +1,17 @@
 import express from "express";
+import { readFileSync } from "fs";
+import swaggerUI from "swagger-ui-express";
+import YAML from "yaml";
 import { Caught } from "./models.js";
 
 const app = express();
 app.use(express.json());
+
+app.use(
+  "/api-docs",
+  swaggerUI.serve,
+  swaggerUI.setup(YAML.parse(readFileSync("openapi.yaml", "utf-8")))
+);
 
 app.get("/caught", async (req, res) => {
   res.json(
